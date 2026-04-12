@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"D:/dev/naver-contact\" && git pull --rebase --autostash origin master >/dev/null 2>&1 || true",
+            "timeout": 30,
+            "statusMessage": "Auto git pull from GitHub..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"D:/dev/naver-contact\" && git add -A && (git diff --cached --quiet || git commit -m \"auto: $(date +%Y-%m-%d\ %H:%M:%S)\" >/dev/null 2>&1) && git push origin master >/dev/null 2>&1 || true",
+            "timeout": 30,
+            "statusMessage": "Auto commit & push to GitHub..."
+          }
+        ]
+      }
+    ]
+  }
+}
