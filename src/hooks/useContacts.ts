@@ -54,7 +54,7 @@ export function useContacts(options: UseContactsOptions = {}) {
     setContacts(result.data || []);
     setTotal(result.meta?.total || 0);
     setLoading(false);
-  }, [page, limit, sortField, sortDirection, search, groupId, favoriteOnly, getAccessToken]);
+  }, [page, limit, sortField, sortDirection, search, groupId, favoriteOnly, trashOnly, noNameOnly, getAccessToken]);
 
   useEffect(() => {
     fetchContacts();
