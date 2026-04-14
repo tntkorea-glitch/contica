@@ -72,9 +72,11 @@ function SharesInner() {
     setIssuing(true);
     setIssuedCode(null);
     try {
-      const body = scope === 'all'
-        ? { scope: 'all' }
-        : { scope: 'groups', group_ids: [...selectedGroupIds] };
+      const body = {
+        scope,
+        group_ids: scope === 'groups' ? [...selectedGroupIds] : undefined,
+        member_label: memberLabelInput.trim() || undefined,
+      };
       const res = await authFetch('/api/v1/shares/invitation', {
         method: 'POST', body: JSON.stringify(body),
       });
