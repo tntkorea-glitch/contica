@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
   const { data: shares, error: dbError } = await supabase
     .from('user_shares')
-    .select('id, main_user_id, member_user_id, scope, created_at, revoked_at')
+    .select('id, main_user_id, member_user_id, scope, created_at, revoked_at, member_label, main_label')
     .eq(col, user!.id)
     .order('created_at', { ascending: false });
 
