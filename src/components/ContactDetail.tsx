@@ -49,49 +49,47 @@ export default function ContactDetail({ contact, onEdit, onDelete, onClose }: Co
 
   return (
     <div className="flex-1 bg-white overflow-y-auto">
-      {/* 상단 프로필 */}
-      <div className="bg-gradient-to-br from-indigo-500 to-purple-600 px-6 py-8 text-white relative">
+      {/* 상단 프로필 — 컴팩트 */}
+      <div className="bg-gradient-to-r from-indigo-500 to-purple-600 px-5 py-3 text-white relative flex items-center gap-3">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1 rounded-full hover:bg-white/20 transition-colors lg:hidden"
+          className="absolute top-2 right-2 p-1 rounded-full hover:bg-white/20 transition-colors lg:hidden"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        <div className="flex items-center gap-4">
-          {contact.profile_image ? (
-            <img src={contact.profile_image} alt="" className="w-20 h-20 rounded-full object-cover border-4 border-white/30" />
-          ) : (
-            <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center text-3xl font-bold">
-              {getInitials(contact)}
-            </div>
-          )}
-          <div>
-            <h2 className="text-2xl font-bold">{getFullName(contact)}</h2>
-            {contact.company && (
-              <p className="text-white/80 text-sm mt-1">
-                {contact.company}{contact.position ? ` | ${contact.position}` : ''}
-              </p>
-            )}
+        {contact.profile_image ? (
+          <img src={contact.profile_image} alt="" className="w-10 h-10 rounded-full object-cover border-2 border-white/30 flex-shrink-0" />
+        ) : (
+          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-base font-bold flex-shrink-0">
+            {getInitials(contact)}
           </div>
+        )}
+
+        <div className="min-w-0 flex-1">
+          <h2 className="text-base font-bold truncate">{getFullName(contact)}</h2>
+          {(contact.company || contact.position) && (
+            <p className="text-white/80 text-xs truncate">
+              {contact.company}{contact.position ? ` · ${contact.position}` : ''}
+            </p>
+          )}
         </div>
 
-        {/* 액션 버튼들 */}
-        <div className="flex gap-3 mt-6">
+        <div className="flex gap-1.5 flex-shrink-0">
           {contact.phone && (
-            <a href={`tel:${contact.phone}`} className="flex items-center gap-2 px-4 py-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors text-sm">
-              <PhoneIcon className="w-4 h-4" /> 전화
+            <a href={`tel:${contact.phone}`} title="전화" className="p-1.5 bg-white/20 rounded-md hover:bg-white/30 transition-colors">
+              <PhoneIcon className="w-4 h-4" />
             </a>
           )}
           {contact.email && (
-            <a href={`mailto:${contact.email}`} className="flex items-center gap-2 px-4 py-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors text-sm">
-              <EmailIcon className="w-4 h-4" /> 이메일
+            <a href={`mailto:${contact.email}`} title="이메일" className="p-1.5 bg-white/20 rounded-md hover:bg-white/30 transition-colors">
+              <EmailIcon className="w-4 h-4" />
             </a>
           )}
-          <button onClick={onEdit} className="flex items-center gap-2 px-4 py-2 bg-white/20 rounded-lg hover:bg-white/30 transition-colors text-sm">
-            <EditIcon className="w-4 h-4" /> 수정
+          <button onClick={onEdit} title="수정" className="p-1.5 bg-white/20 rounded-md hover:bg-white/30 transition-colors">
+            <EditIcon className="w-4 h-4" />
           </button>
         </div>
       </div>
