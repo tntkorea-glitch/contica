@@ -22,17 +22,13 @@ export async function pullSync(
     const since = meta?.last_pulled_at ?? null;
 
     // 2. 먼저 total count 가져오기 (UI에 표시용)
-    let totalQuery = supabase
+    const baseCount = supabase
       .from('contacts')
-      .select('*', { count: 'exact', head: true })
-      .is('deleted_at', null);
-    if (since) {
-      totalQuery = supabase
-        .from('contacts')
-        .select('*', { count: 'exact', head: true })
-        .gt('updated_at', since);
-    }
-    const { count: totalCount } = await totalQuery;
+      .select('*', { count: 'exact', head: true });
+    const { count: totalCount, error: countErr } = await (since
+      ? baseCount.gt('updated_at', since)
+      : baseCount.is('deleted_at', null));
+    if (countErr) throw countErr;
     const total = totalCount ?? 0;
 
     onProgress?.({ phase: 'contacts', loaded: 0, total, message: '연락처 동기화 시작' });
