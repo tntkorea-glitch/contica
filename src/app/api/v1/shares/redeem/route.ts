@@ -9,7 +9,9 @@ export async function POST(request: NextRequest) {
   const { user, error } = await requireAuth(request);
   if (error) return error;
 
-  const body = await request.json().catch(() => ({}));
+  // 요청 본문을 한 번만 파싱하기 위해 미리 읽음 — 아래에서 body 재사용
+  const raw = await request.text();
+  const body = raw ? JSON.parse(raw) : {};
   const code = typeof body?.code === 'string' ? body.code.trim().toUpperCase() : '';
   if (!code) return apiError(ErrorCodes.VALIDATION, 'code가 필요합니다');
 
