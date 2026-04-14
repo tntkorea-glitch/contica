@@ -274,7 +274,7 @@ function ContactsApp() {
 
       {/* 리사이즈 핸들 */}
       <div
-        onMouseDown={handleMouseDown}
+        onMouseDown={handleSidebarMouseDown}
         className="w-1 cursor-col-resize hover:bg-indigo-300 active:bg-indigo-400 transition-colors flex-shrink-0"
       />
 
