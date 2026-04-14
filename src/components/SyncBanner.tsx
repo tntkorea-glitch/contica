@@ -40,6 +40,12 @@ export default function SyncBanner() {
               <div className="h-full bg-white rounded-full transition-all duration-300" style={{ width: `${pct}%` }} />
             </div>
           )}
+          {progress.total === 0 && !isError && !isDone && progress.loaded > 0 && (
+            <div className="mt-1 h-1 bg-white/30 rounded-full overflow-hidden">
+              {/* total 미상 — 무한 루프 애니메이션 */}
+              <div className="h-full w-1/3 bg-white rounded-full animate-pulse" />
+            </div>
+          )}
         </div>
 
         {progress.total > 0 && !isDone && !isError && (
