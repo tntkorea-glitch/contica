@@ -203,8 +203,8 @@ export default function Sidebar({
           </div>
         )}
 
-        {/* 그룹 목록 */}
-        <div className="space-y-0.5">
+        {/* 그룹 목록 (폴딩 가능) */}
+        <div className={`space-y-0.5 ${groupsOpen ? '' : 'hidden'}`}>
           {groups.map(group => (
             <div key={group.id} className="group flex items-center">
               <button
