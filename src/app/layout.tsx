@@ -45,6 +45,9 @@ export default function RootLayout({
       lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <Script src="/inapp-guard.js" strategy="beforeInteractive" />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
