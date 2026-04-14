@@ -412,17 +412,20 @@ function ContactsApp() {
               </div>
             )}
           </div>
-          {/* 리사이즈 핸들 (목록 / 상세보기 사이) */}
+          {/* 리사이즈 핸들 (목록 / 상세보기 사이) — PC에서만 */}
           <div
             onMouseDown={handleListMouseDown}
-            className="w-1 cursor-col-resize hover:bg-indigo-300 active:bg-indigo-400 transition-colors flex-shrink-0 border-r border-gray-200"
+            className="hidden lg:block w-1 cursor-col-resize hover:bg-indigo-300 active:bg-indigo-400 transition-colors flex-shrink-0 border-r border-gray-200"
           />
-          <ContactDetail
-            contact={selectedContact}
-            onEdit={() => { if (selectedContact) { setEditingContact(selectedContact); setShowForm(true); } }}
-            onDelete={handleDelete}
-            onClose={() => setSelectedContact(null)}
-          />
+          {/* 디테일 — PC: 인라인, 모바일: 전체화면 */}
+          <div className={`${selectedContact ? 'flex' : 'hidden lg:flex'} flex-1 min-w-0 absolute lg:static inset-0 bg-white z-20`}>
+            <ContactDetail
+              contact={selectedContact}
+              onEdit={() => { if (selectedContact) { setEditingContact(selectedContact); setShowForm(true); } }}
+              onDelete={handleDelete}
+              onClose={() => setSelectedContact(null)}
+            />
+          </div>
         </div>
       </div>
 
