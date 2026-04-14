@@ -11,8 +11,18 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [signupSuccess, setSignupSuccess] = useState(false);
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, signInWithGoogle } = useAuth();
   const router = useRouter();
+
+  const handleGoogle = async () => {
+    setError('');
+    try {
+      await signInWithGoogle();
+      // redirect는 Supabase가 처리
+    } catch (err) {
+      setError(err instanceof Error ? err.message : '구글 로그인 실패');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
