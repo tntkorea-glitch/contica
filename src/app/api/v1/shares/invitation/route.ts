@@ -12,6 +12,9 @@ export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => ({}));
   const scope: 'all' | 'groups' = body?.scope === 'groups' ? 'groups' : 'all';
   const groupIds: string[] = Array.isArray(body?.group_ids) ? body.group_ids : [];
+  const memberLabel: string | null = typeof body?.member_label === 'string' && body.member_label.trim()
+    ? body.member_label.trim().slice(0, 50)
+    : null;
 
   if (scope === 'groups' && groupIds.length === 0) {
     return apiError(ErrorCodes.VALIDATION, 'group_ids가 필요합니다 (scope=groups)');
