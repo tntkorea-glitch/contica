@@ -72,6 +72,7 @@ export function useAuth() {
     isAuthenticated: !!state.user,
     signUp,
     signIn,
+    signInWithGoogle,
     signOut,
     getAccessToken,
   };
