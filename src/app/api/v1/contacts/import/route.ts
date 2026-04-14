@@ -36,11 +36,15 @@ export async function POST(request: NextRequest) {
   }
 
   // 기존 연락처 fetch (중복 검사용) — 휴지통은 제외하고 활성 연락처만
-  const { data: existing } = await supabase
-    .from('contacts')
-    .select('id, last_name, first_name, phone, phone2, email, email2')
-    .eq('user_id', user!.id)
-    .is('deleted_at', null);
+  // Supabase 1000행 limit 우회 — 페이지네이션으로 전부 가져옴
+  type ExistingRow = { id: string; last_name: string; first_name: string; phone: string; phone2: string | null; email: string | null; email2: string | null };
+  const existing = await fetchAllRows<ExistingRow>(() =>
+    supabase
+      .from('contacts')
+      .select('id, last_name, first_name, phone, phone2, email, email2')
+      .eq('user_id', user!.id)
+      .is('deleted_at', null)
+  );
 
   // 매칭 인덱스 (전화번호 끝 8자리, 이메일 lowercase)
   const phoneIdx = new Map<string, ExistingContact>();
