@@ -173,6 +173,15 @@ function SharesInner() {
             </div>
           )}
 
+          <input
+            type="text"
+            value={memberLabelInput}
+            onChange={e => setMemberLabelInput(e.target.value.slice(0, 50))}
+            placeholder="이 기기 이름 (예: 업무폰, 집 컴퓨터, 아내 폰)"
+            maxLength={50}
+            className="w-full mb-3 px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+
           <button
             onClick={handleIssue}
             disabled={issuing || (scope === 'groups' && selectedGroupIds.size === 0)}
