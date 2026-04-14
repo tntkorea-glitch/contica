@@ -276,7 +276,7 @@ function SharesInner() {
               <ul className="space-y-2">
                 {linkedMains.filter(m => !m.revoked_at).map(m => (
                   <li key={m.id} className="px-3 py-2 bg-gray-50 rounded-lg">
-                    <div className="text-xs text-gray-700 truncate font-mono">{m.main_user_id}</div>
+                    <div className="text-sm font-medium text-gray-800 truncate">{m.main_label || '이름 없음'}</div>
                     <div className="text-[11px] text-gray-500">
                       {m.scope === 'all' ? '전체 공유 받음' : `그룹 공유 받음 (${m.groups.length}개)`}
                     </div>
