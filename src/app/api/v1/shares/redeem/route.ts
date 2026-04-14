@@ -34,11 +34,21 @@ export async function POST(request: NextRequest) {
     .eq('member_user_id', user!.id)
     .maybeSingle();
 
+  const body = await request.json().catch(() => ({}));
+  const mainLabelInput: string | null = typeof body?.main_label === 'string' && body.main_label.trim()
+    ? body.main_label.trim().slice(0, 50)
+    : null;
+
   let shareId: string;
   if (existing) {
     const { error: upErr } = await supabase
       .from('user_shares')
-      .update({ scope: inv.scope, revoked_at: null })
+      .update({
+        scope: inv.scope,
+        revoked_at: null,
+        member_label: inv.member_label ?? undefined,
+        main_label: mainLabelInput ?? undefined,
+      })
       .eq('id', existing.id);
     if (upErr) return apiError(ErrorCodes.INTERNAL, upErr.message);
     shareId = existing.id;
@@ -50,6 +60,8 @@ export async function POST(request: NextRequest) {
         main_user_id: inv.main_user_id,
         member_user_id: user!.id,
         scope: inv.scope,
+        member_label: inv.member_label,
+        main_label: mainLabelInput,
       })
       .select('id')
       .single();
