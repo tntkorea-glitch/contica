@@ -37,6 +37,7 @@ function ContactsApp() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [showTrash, setShowTrash] = useState(false);
   const [showNoName, setShowNoName] = useState(false);
+  const [showRecent, setShowRecent] = useState(false);
   const [pageSize, setPageSize] = useState(30);
   const searchTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
