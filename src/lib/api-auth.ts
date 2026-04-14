@@ -34,12 +34,10 @@ export async function getAuthUser(request: NextRequest): Promise<AuthUser | null
 }
 
 // 인증 필수 엔드포인트용 — 인증 실패시 401 반환
-// TODO: 테스트 완료 후 bypass 제거
 export async function requireAuth(request: NextRequest) {
   const user = await getAuthUser(request);
   if (!user) {
-    // 테스트용 bypass — 인증 없이 default 유저로 동작
-    return { user: { id: 'default', email: 'test@test.com' } as AuthUser, error: null };
+    return { user: null, error: apiError(ErrorCodes.UNAUTHORIZED, '로그인이 필요합니다') };
   }
   return { user, error: null };
 }
