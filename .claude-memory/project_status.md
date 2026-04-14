@@ -1,6 +1,6 @@
 ---
 name: Project Status
-description: Listica 프로젝트 현재 진행 상태 및 다음 작업
+description: listica 프로젝트 현재 진행 상태 및 다음 작업
 type: project
 originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 ---
@@ -28,7 +28,7 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - **모바일 반응형 (2026-04-14)** — lg: 1024px 기준. 모바일에서 사이드바 drawer / 리스트↔디테일 스택 전환
 - **본 계정 = 구글 계정** (85f67042-f584-493e-98d5-d695d27152e5). 이메일 계정은 삭제됨
 - **포트 고정** = localhost:**3006** (package.json dev/start)
-- **Vercel 배포 URL** = https://listica.vercel.app (리네이밍 후)
+- **Vercel 배포 URL** = https://listica.vercel.app
 
 ## Supabase 설정
 - Organization: milveus-glitch's Project (Pro Plan $25/월)
