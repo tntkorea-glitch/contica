@@ -1,3 +1,3 @@
 - [User Profile](user_profile.md) — 사용자 기본 프로필 정보
-- [Project Init](project_init.md) — naver-contact 프로젝트 생성 정보
+- [Project Init](project_init.md) — listica 프로젝트 생성 정보
 - [Project Status](project_status.md) — 현재 진행 상태 및 다음 작업
