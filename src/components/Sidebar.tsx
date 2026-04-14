@@ -151,11 +151,20 @@ export default function Sidebar({
         {/* 구분선 */}
         <div className="border-t border-gray-200 my-2" />
 
-        {/* 그룹 헤더 */}
+        {/* 그룹 헤더 — 클릭으로 폴딩 */}
         <div className="flex items-center justify-between px-3 py-2">
-          <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">내 주소록</span>
           <button
-            onClick={() => setShowNewGroup(true)}
+            onClick={() => setGroupsOpen(v => !v)}
+            className="flex items-center gap-1.5 text-xs font-semibold text-gray-400 uppercase tracking-wider hover:text-gray-600 transition-colors"
+          >
+            <svg className={`w-3 h-3 transition-transform ${groupsOpen ? 'rotate-90' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
+            <span>내 주소록</span>
+            <span className="text-gray-300">({groups.length})</span>
+          </button>
+          <button
+            onClick={() => { setShowNewGroup(true); setGroupsOpen(true); }}
             className="text-gray-400 hover:text-indigo-600 transition-colors"
             title="그룹 추가"
           >
@@ -166,7 +175,7 @@ export default function Sidebar({
         </div>
 
         {/* 새 그룹 입력 */}
-        {showNewGroup && (
+        {groupsOpen && showNewGroup && (
           <div className="px-3 py-2 space-y-2">
             <input
               type="text"
