@@ -22,6 +22,9 @@ interface SidebarProps {
   onOpenImport?: () => void;
   onOpenExport?: () => void;
   onOpenDuplicates?: () => void;
+  onCreateContact?: () => void;
+  onSelectRecent?: () => void;
+  showRecent?: boolean;
 }
 
 const GROUP_COLORS = [
