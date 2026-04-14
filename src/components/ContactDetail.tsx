@@ -96,39 +96,47 @@ export default function ContactDetail({ contact, onEdit, onDelete, onClose }: Co
         </div>
       </div>
 
-      {/* 상세 정보 */}
-      <div className="p-6 space-y-1">
-        {fields.map((field, i) => (
-          <div key={i} className="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
-            <field.icon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <div className="text-xs text-gray-400 mb-0.5">{field.label}</div>
-              {field.href ? (
-                <a href={field.href} className="text-sm text-indigo-600 hover:underline break-all">{field.value}</a>
-              ) : (
-                <div className="text-sm text-gray-800 whitespace-pre-wrap">{field.value}</div>
-              )}
+      {/* 본문: 좌(기본정보) / 우(고객 인사이트) — 넓은 화면에서만 2단 */}
+      <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] divide-y xl:divide-y-0 xl:divide-x divide-gray-100">
+        {/* 좌측 — 기본 정보 */}
+        <div>
+          <div className="p-6 space-y-1">
+            {fields.map((field, i) => (
+              <div key={i} className="flex items-start gap-4 py-3 border-b border-gray-100 last:border-0">
+                <field.icon className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs text-gray-400 mb-0.5">{field.label}</div>
+                  {field.href ? (
+                    <a href={field.href} className="text-sm text-indigo-600 hover:underline break-all">{field.value}</a>
+                  ) : (
+                    <div className="text-sm text-gray-800 whitespace-pre-wrap">{field.value}</div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 삭제 버튼 */}
+          <div className="p-6 border-t border-gray-100">
+            <button
+              onClick={() => {
+                if (confirm(`'${getFullName(contact)}' 연락처를 삭제하시겠습니까?`)) {
+                  onDelete(contact.id);
+                }
+              }}
+              className="text-sm text-red-500 hover:text-red-700 transition-colors"
+            >
+              연락처 삭제
+            </button>
+            <div className="mt-4 text-xs text-gray-400">
+              생성: {new Date(contact.created_at).toLocaleDateString('ko-KR')} |
+              수정: {new Date(contact.updated_at).toLocaleDateString('ko-KR')}
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* 삭제 버튼 */}
-      <div className="p-6 border-t border-gray-100">
-        <button
-          onClick={() => {
-            if (confirm(`'${getFullName(contact)}' 연락처를 삭제하시겠습니까?`)) {
-              onDelete(contact.id);
-            }
-          }}
-          className="text-sm text-red-500 hover:text-red-700 transition-colors"
-        >
-          연락처 삭제
-        </button>
-        <div className="mt-4 text-xs text-gray-400">
-          생성: {new Date(contact.created_at).toLocaleDateString('ko-KR')} |
-          수정: {new Date(contact.updated_at).toLocaleDateString('ko-KR')}
         </div>
+
+        {/* 우측 — 고객 인사이트 (TNT mall 연동 자리) */}
+        <CustomerInsightsPanel phone={contact.phone} />
       </div>
     </div>
   );
