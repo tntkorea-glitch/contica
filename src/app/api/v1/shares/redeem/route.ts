@@ -36,7 +36,6 @@ export async function POST(request: NextRequest) {
     .eq('member_user_id', user!.id)
     .maybeSingle();
 
-  const body = await request.json().catch(() => ({}));
   const mainLabelInput: string | null = typeof body?.main_label === 'string' && body.main_label.trim()
     ? body.main_label.trim().slice(0, 50)
     : null;
