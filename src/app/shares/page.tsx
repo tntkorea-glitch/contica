@@ -233,6 +233,14 @@ function SharesInner() {
             메인 계정에서 발급한 초대 코드를 입력하면 그 계정의 연락처가 이 기기에 동기화됩니다.
           </p>
 
+          <input
+            type="text"
+            value={mainLabelInput}
+            onChange={e => setMainLabelInput(e.target.value.slice(0, 50))}
+            placeholder="메인 계정에 붙일 별명 (예: 내 메인, 회사 계정)"
+            maxLength={50}
+            className="w-full mb-3 px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
           <div className="flex gap-2">
             <input
               type="text"
