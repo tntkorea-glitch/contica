@@ -342,8 +342,8 @@ function ContactsApp() {
           </div>
         )}
 
-        <div className="flex-1 flex min-h-0">
-          <div className="w-[400px] border-r border-gray-200 flex flex-col bg-white">
+        <div className="flex-1 flex min-h-0" ref={listAreaRef}>
+          <div className="flex flex-col bg-white flex-shrink-0" style={{ width: listWidth }}>
             <ContactList
               contacts={contacts}
               loading={loading}
