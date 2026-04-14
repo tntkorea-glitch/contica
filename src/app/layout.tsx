@@ -14,12 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "주소록 - 연락처 동기화",
+  title: "Listica - 연락처 동기화",
   description: "다중 기기 간 연락처 실시간 동기화 서비스",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "주소록",
+    title: "Listica",
   },
   icons: {
     icon: "/icon.svg",
