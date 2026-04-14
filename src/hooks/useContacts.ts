@@ -60,7 +60,7 @@ export function useContacts(options: UseContactsOptions = {}) {
     fetchContacts();
   }, [fetchContacts]);
 
-  // Supabase Realtime 구독
+  // Supabase Realtime 구독 (세션 붙으면 자동 수신)
   useEffect(() => {
     const channel = supabase
       .channel('contacts-changes')
@@ -72,6 +72,19 @@ export function useContacts(options: UseContactsOptions = {}) {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
+  }, [fetchContacts]);
+
+  // 탭 포커스 시 자동 새로고침 (Realtime 보강 — 다른 기기에서 변경된 데이터 반영)
+  useEffect(() => {
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') fetchContacts();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', onVisible);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', onVisible);
+    };
   }, [fetchContacts]);
 
   const toggleFavorite = async (id: string, current: boolean) => {
