@@ -115,19 +115,19 @@ export default function ContactDetail({ contact, onEdit, onDelete, onClose }: Co
           </div>
 
           {/* 삭제 버튼 */}
-          <div className="p-6 border-t border-gray-100">
+          <div className="p-4 border-t border-gray-100">
             <button
               onClick={() => {
                 if (confirm(`'${getFullName(contact)}' 연락처를 삭제하시겠습니까?`)) {
                   onDelete(contact.id);
                 }
               }}
-              className="text-sm text-red-500 hover:text-red-700 transition-colors"
+              className="text-xs text-red-500 hover:text-red-700 transition-colors"
             >
               연락처 삭제
             </button>
-            <div className="mt-4 text-xs text-gray-400">
-              생성: {new Date(contact.created_at).toLocaleDateString('ko-KR')} |
+            <div className="mt-3 text-[11px] text-gray-400">
+              생성: {new Date(contact.created_at).toLocaleDateString('ko-KR')} ·
               수정: {new Date(contact.updated_at).toLocaleDateString('ko-KR')}
             </div>
           </div>
