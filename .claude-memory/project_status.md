@@ -36,14 +36,30 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - Region: Northeast Asia (Seoul)
 - 이메일 인증: 아직 비활성화 안 됨 (Supabase Auth 설정에서 Confirm email OFF 필요)
 
-## Next up when resuming
-1. **React Native(Expo) 앱 프로젝트 시작** — 새 폴더 `D:\dev\listica-mobile`
-2. **앱 MVP**: 로그인 → 연락처 리스트/추가/수정 + 폰 기본 연락처 sync (1주)
-3. **Expo Go / EAS dev build 로 본인 폰 설치** — 앱스토어 승인 전에 즉시 사용
-4. **앱 polish + 앱스토어 심사 준비** (1~2주)
-5. **카카오/네이버 로그인** 실제 구현 (현재는 "준비중" alert만)
-6. **두번째 xlsx 파일 import** (92935659, 16,968건)
-7. **Realtime 디버깅** (지금은 새로고침/포커스 기반으로 작동 중)
+## 진행 (2026-04-15 새 PC 이어서)
+- 새 PC(`C:\Users\a0109`) 셋업 완료: npm install, vercel env pull, gitleaks pre-commit
+- 웹 `npm run build` 성공 확인
+- **listica-mobile Expo 프로젝트 스캐폴딩 완료** (`D:\dev\listica-mobile`)
+  - Expo SDK 54 + blank-typescript + React Native 0.81
+  - @supabase/supabase-js + AsyncStorage + react-native-url-polyfill
+  - `src/lib/supabase.ts` — AsyncStorage 세션 저장
+  - `src/lib/types.ts` — 웹 types.ts에서 Contact/Group 복제 (MVP용 축약본)
+  - `src/screens/LoginScreen.tsx` — 이메일/비번 로그인·가입 (카카오/구글은 아직 없음)
+  - `src/screens/ContactsScreen.tsx` — FlatList 리스트 + 검색 + pull-to-refresh
+  - `App.tsx` — 세션 기반 Login/Contacts 스위칭
+  - `.env` 는 `.gitignore` 처리 완료 (EXPO_PUBLIC_SUPABASE_URL/ANON_KEY)
+  - `git init` 로컬 커밋 완료 (원격 repo 아직 안 만듦)
+  - `npx tsc --noEmit` 통과
 
-**Why:** 웹은 실사용 가능 상태. 최종 목표는 React Native 앱 + 앱스토어 배포 (다른 회원도 가입 사용).
-**How to apply:** 2번부터 새 프로젝트 시작. 공용 타입(src/lib/types.ts)을 모바일 앱에서도 import 가능하도록 공유 패키지로 뽑을지 검토.
+## Next up when resuming
+1. **실기기에서 Expo Go 테스트** — `cd D:\dev\listica-mobile && npm start` → QR 스캔. 로그인·리스트 동작 확인
+2. **listica-mobile GitHub 원격 repo 생성 + push** (사용자 확인 후)
+3. **연락처 추가/수정 폼 화면** 구현
+4. **폰 기본 연락처 sync** (expo-contacts) — 가져오기/내보내기
+5. **Google OAuth 정리** — issue_oauth_tangled.md 참고 (Google Cloud Console 정리 후 Supabase Provider 재등록)
+6. **카카오/네이버 로그인** 실제 구현
+7. **두번째 xlsx 파일 import** (92935659, 16,968건 — 사용자가 웹 UI에서 실행)
+8. **Realtime 구독 추가** — 현재 postgres_changes 미구현. 웹/모바일 모두 새로고침/포커스 기반
+
+**Why:** 웹은 실사용 가능 상태. 최종 목표는 React Native 앱 + 앱스토어 배포.
+**How to apply:** 모바일 앱 타입은 현재 수동 복제. 나중에 양쪽 모두 커지면 `packages/shared` 로 추출 검토.

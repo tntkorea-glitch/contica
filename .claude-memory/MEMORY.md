@@ -1,4 +1,5 @@
 - [User Profile](user_profile.md) — 사용자 기본 프로필 정보
 - [Project Init](project_init.md) — listica 프로젝트 생성 정보
 - [Project Status](project_status.md) — 현재 진행 상태 및 다음 작업
+- [listica-mobile](project_listica_mobile.md) — Expo 앱 위치·구조·실행법 (D:\dev\listica-mobile)
 - [OAuth 설정 꼬임](issue_oauth_tangled.md) — liketica/listica Google OAuth 클라이언트 섞여있음, 다음 세션에 처음부터 재확인·재셋팅 필요
