@@ -27,9 +27,10 @@ export function useContacts(options: UseContactsOptions = {}) {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const { getAccessToken } = useAuth();
+  const { getAccessToken, session, loading: authLoading } = useAuth();
 
   const fetchContacts = useCallback(async () => {
+    if (authLoading || !session) return;
     setLoading(true);
     const params = new URLSearchParams({
       page: String(page),
@@ -54,7 +55,7 @@ export function useContacts(options: UseContactsOptions = {}) {
     setContacts(result.data || []);
     setTotal(result.meta?.total || 0);
     setLoading(false);
-  }, [page, limit, sortField, sortDirection, search, groupId, favoriteOnly, trashOnly, noNameOnly, getAccessToken]);
+  }, [page, limit, sortField, sortDirection, search, groupId, favoriteOnly, trashOnly, noNameOnly, getAccessToken, authLoading, session]);
 
   useEffect(() => {
     fetchContacts();

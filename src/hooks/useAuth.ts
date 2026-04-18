@@ -60,10 +60,10 @@ export function useAuth() {
   }, []);
 
   // Bearer 토큰 가져오기 (API 호출용)
+  // state.session에서 직접 반환 — supabase.auth.getSession()은 OAuth 콜백 직후 null을 반환하는 레이스 컨디션이 있음.
   const getAccessToken = useCallback(async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    return session?.access_token ?? null;
-  }, []);
+    return state.session?.access_token ?? null;
+  }, [state.session]);
 
   return {
     user: state.user,
