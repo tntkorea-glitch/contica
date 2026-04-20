@@ -442,6 +442,7 @@ function ContactsApp() {
           <div className={`${selectedContact ? 'flex' : 'hidden lg:flex'} flex-1 min-w-0 absolute lg:static inset-0 bg-white z-20`}>
             <ContactDetail
               contact={selectedContact}
+              groups={groups}
               onEdit={() => { if (selectedContact) { setEditingContact(selectedContact); setShowForm(true); } }}
               onDelete={handleDelete}
               onClose={() => setSelectedContact(null)}
