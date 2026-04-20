@@ -117,6 +117,31 @@ export default function ContactDetail({ contact, groups, onEdit, onDelete, onClo
             ))}
           </div>
 
+          {/* 그룹 */}
+          {(() => {
+            const cg = (contact as Contact & { contact_groups?: { group_id: string }[] }).contact_groups ?? [];
+            const groupIds = new Set(cg.map(x => x.group_id));
+            const matched = (groups ?? []).filter(g => groupIds.has(g.id));
+            if (matched.length === 0) return null;
+            return (
+              <div className="p-4 border-t border-gray-100">
+                <div className="text-[11px] text-gray-400 mb-2">그룹</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {matched.map(g => (
+                    <span
+                      key={g.id}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium text-white"
+                      style={{ backgroundColor: g.color || '#9ca3af' }}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
+                      {g.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
           {/* 삭제 버튼 */}
           <div className="p-4 border-t border-gray-100">
             <button
