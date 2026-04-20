@@ -94,18 +94,27 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
   - `git init` 로컬 커밋 완료 (원격 repo 아직 안 만듦)
   - `npx tsc --noEmit` 통과
 
+## 진행 (2026-04-20) — Realtime 구독 + 전화번호 포맷 + OAuth deleted_client 진단
+- **모바일 Supabase Realtime 구독 추가** (`app/(tabs)/index.tsx`): `postgres_changes` `*` 이벤트로 contacts 테이블 구독 → 300ms 디바운스 후 `load({reset:true})` 자동 호출. 상단에 🟢 `실시간 · N` 뱃지 추가(이벤트 카운트 시각화). `alter publication supabase_realtime add table public.contacts`는 이미 반영돼 있어 skip. **실기기 테스트는 OAuth 이슈 때문에 보류.**
+- **웹 연락처 폼 전화번호 자동 하이픈 포맷 추가** (`ContactForm.tsx`): 메모리 "이전에 추가했다"는 기록과 달리 실제로는 **구현된 적 없었음**(커밋 히스토리 검증). `formatKoreanPhone` 유틸을 phone/phone2 onChange에 연결. 010/02/15xx/031 패턴 자동 분기.
+- **프로덕션 Google OAuth `deleted_client` 에러 진단**: 에러 URL의 `client_id=773222550757-j57q7seu6i932m7k833crdne1d86rui3...` 파라미터가 Google Cloud의 실제 값 `170510383236-dpi1hbihh8jv73ufcs2v9i1bgdm3i4af...`와 **완전히 다름**. **즉 Supabase Auth Providers의 Google Client ID에 구(삭제된) 값이 들어있음** — 사용자가 육안 확인 시 "다 맞음"이라 답했으나 실제 저장값 불일치. 다음 세션에 Supabase Auth Providers에서 ID/Secret 교체 필요.
+- **모바일 Drawer 사이드바** — 메모리에 "추가했었다"는 기록이 있었으나 실제론 미구현 확인 (`app/(drawer)/` 없음, drawer import 없음). 다음 세션 우선순위.
+
 ## Next up when resuming
-1. **⚠️ Supabase Service Role key Reset** — 이전 세션 대화 로그에 평문 노출된 상태. Supabase 대시보드에서 재발급 → Vercel env SUPABASE_SERVICE_ROLE_KEY 업데이트 → 재배포. 보안 마감.
-2. **⚠️ 본 계정 비밀번호 변경** — SQL로 임시 설정한 비밀번호가 대화 로그에 남을 수 있음. 앱에서 "비밀번호 변경" 또는 Supabase reset으로 새 값으로 교체.
-3. **Vercel Preview 환경 NEXT_PUBLIC_SUPABASE_ANON_KEY 추가** — CLI Preview 등록 실패 건. UI에서 수동 추가.
-4. **모바일 Google OAuth 재셋팅** — iOS/Android용 OAuth Client ID 새로 발급 (Google Cloud Console에서 번들 ID `com.tntkorea.conticamobile` + Android SHA-1). 완료 후 `.env` EXPO_PUBLIC_GOOGLE_*_CLIENT_ID 갱신.
-5. **모바일 앱 사이드바(Drawer) 추가** (사용자 우선 요구) — 웹과 동일한 필터(전체/즐겨찾기/휴지통/이름없는) + 그룹 리스트. `@react-navigation/drawer` 설치 + app/(drawer)/ 재구성. 1~2시간.
-6. **Supabase Realtime 구독 구현** — 현재 pull-to-refresh로 동작 확인. 즉시 반영 원하면 postgres_changes 구독 추가.
-7. **폰 기본 연락처 실시간 동기화** (사용자 우선 요구) — expo-contacts로 iOS/Android 내장 연락처 읽기·쓰기 + 앱↔폰 양방향 sync. MVP는 "앱 포그라운드 복귀 시 diff sync", v2에서 native ContactsObserver로 실시간 감지 검토.
-8. **연락처 추가/수정 폼 화면** 구현 (모바일)
-7. **카카오/네이버 로그인** 실제 구현
-8. **Realtime 구독 추가** — 현재 postgres_changes 미구현. 웹/모바일 모두 새로고침/포커스 기반
-9. **`contica.co.kr` 도메인 구매** → Vercel 커스텀 도메인 연결 + OAuth origins 추가
+1. **⚠️ Supabase Auth Providers → Google Client ID 교체** (최우선, 프로덕션 로그인 차단 중)
+   - Google Cloud `Contica Web` → `+ Add secret`으로 새 Client Secret 발급
+   - Supabase Auth Providers → Google → Client ID = `170510383236-dpi1hbihh8jv73ufcs2v9i1bgdm3i4af.apps.googleusercontent.com`, Secret = 방금 발급값으로 교체 → Save
+   - 시크릿 창에서 `contica.vercel.app` Google 로그인 성공 확인
+2. **모바일 Realtime 구독 실기기 테스트** — OAuth 복구 후. 🟢 `실시간` 뱃지 노출 + 웹에서 추가 시 0.3초 내 자동 반영 확인
+3. **모바일 Drawer 사이드바 구현** (1~2시간) — `@react-navigation/drawer` 설치 + `app/(drawer)/` 재구성 + 필터(전체/즐겨찾기/휴지통/이름없는) + 그룹 리스트
+4. **⚠️ Supabase Service Role key Reset** — 이전 세션 대화 로그에 평문 노출된 상태. 재발급 → Vercel env 업데이트 → 재배포
+5. **⚠️ 본 계정 비밀번호 변경** — SQL로 임시 설정한 비밀번호가 대화 로그에 남을 수 있음
+6. **Vercel Preview 환경 NEXT_PUBLIC_SUPABASE_ANON_KEY 추가** — CLI Preview 등록 실패 건, UI에서 수동 추가
+7. **모바일 Google OAuth 재셋팅** — iOS/Android용 Client ID (번들 ID `com.tntkorea.conticamobile` + Android SHA-1)
+8. **폰 기본 연락처 양방향 동기화** — expo-contacts + diff sync (사용자 우선 요구)
+9. **연락처 추가/수정 폼 화면** (모바일)
+10. **카카오/네이버 로그인** 실제 구현
+11. **`contica.co.kr` 도메인 구매** → Vercel 커스텀 도메인 + OAuth origins 추가
 
 **Why:** 웹은 실사용 가능 상태. 최종 목표는 React Native 앱 + 앱스토어 배포.
 **How to apply:** 모바일 앱 타입은 현재 수동 복제. 나중에 양쪽 모두 커지면 `packages/shared` 로 추출 검토.
