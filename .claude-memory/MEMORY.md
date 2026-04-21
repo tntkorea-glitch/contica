@@ -3,3 +3,4 @@
 - [Project Status](project_status.md) — 현재 진행 상태 및 다음 작업
 - [contica-mobile](project_contica_mobile.md) — Expo 앱 위치·구조·실행법 (D:\dev\contica-mobile)
 - [Supabase Invalid API key 500](feedback_supabase_api_key_rotation.md) — 증상·원인·수정 절차 체크리스트
+- [계정 모델 (Main/Sub)](project_account_model.md) — 메인=tntkorea 구글 고정, 나머지는 서브. 권한·이름충돌 정책
