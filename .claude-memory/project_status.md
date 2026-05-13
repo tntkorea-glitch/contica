@@ -30,11 +30,17 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - **포트 고정** = localhost:**3006** (package.json dev/start)
 - **Vercel 배포 URL** = https://contica.vercel.app (2026-04-19 정리 완료. `contica.vercel.app`은 선점되지 않았음 — 과거 메모리 오기록. 구 `listica-contact`/`naver-contact` alias는 제거 또는 rename. 나중에 `contica.co.kr` 도메인 구매 예정)
 
-## Supabase 설정
-- Organization: milveus-glitch's Project (Pro Plan $25/월)
-- Project URL: https://krnpicwujfkvbymtecsf.supabase.co
+## Supabase 설정 (2026-05-14 이관 완료)
+- Organization: a01024425659-dev's Org (**Free Plan** — Pro→Free 이관 완료)
+- Project URL: https://xrwvpfdxcjrgdvcaylgk.supabase.co
 - Region: Northeast Asia (Seoul)
-- 이메일 인증: 아직 비활성화 안 됨 (Supabase Auth 설정에서 Confirm email OFF 필요)
+- 본 계정 새 UUID: **9f4d9870-0ff8-4af1-b33d-b5b21f32c2d7** (구: 85f67042-f584-493e-98d5-d695d27152e5)
+- Vercel 배포 URL: **https://contica-995u.vercel.app**
+- GitHub: https://github.com/a01024425659-dev/contica
+
+## 구 Supabase (이관 전)
+- Organization: milveus-glitch's Project (Pro Plan $25/월) — 이관 완료 후 삭제 예정
+- Project URL: https://krnpicwujfkvbymtecsf.supabase.co
 
 ## 진행 (2026-04-19 늦밤) — 프로덕션 OAuth + 데이터 조회 완전 복구
 - **Vercel 도메인 전환**: `naver-contact` → `contica.vercel.app` rename + Production 연결. `listica-contact`/`contica-contact` alias 전부 제거. 새 primary URL: **https://contica.vercel.app**
