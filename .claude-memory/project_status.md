@@ -122,18 +122,13 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - **Phase 4 완료 — 웹 중복정리 알림/병합 UI** (커밋 묶음, auto-commit으로 푸시): `DuplicateAlert` 컴포넌트 신규 (헤더 아래 노란 배너, 메인 페이지 로드 시 `/api/v1/contacts/duplicates?mode=exact` 호출해 그룹 수 표시). 배너 클릭 시 `DuplicatesModal` autoStart=true로 자동 open. `DuplicatesModal` 확장: 각 그룹 row에 라디오(기준 primary) + 체크박스(병합 대상) + "선택 병합(N)" 버튼. "전체 병합" 기존 기능도 유지. `page.tsx`: `dupRefreshKey` state로 병합 성공 후 배너 카운트 자동 갱신. `next build` 통과.
 
 ## Next up when resuming
-1. **Phase 3 — 서브 폰 삭제 감지 UI** (다음 세션) — 서브 계정에서 폰 연락처 삭제 시 알림 + 재확인 후 메인 서버 반영.
-3. **📱 새 APK 설치 + Discover 탭 실기기 테스트** — https://expo.dev/artifacts/eas/gC7LuTurVMdyFJvTPY2KNw.apk. Discover 스캔 + 체크박스 선택 + 행 탭 → tel:/sms: 오픈 확인.
-4. **모바일 Realtime 구독 실기기 테스트** — OAuth 복구됐으니 이제 가능. 🟢 `실시간` 뱃지 노출 + 웹에서 추가 시 0.3초 내 자동 반영 확인
-5. **모바일 Drawer 사이드바 구현** (1~2시간) — `@react-navigation/drawer` 설치 + `app/(drawer)/` 재구성 + 필터(전체/즐겨찾기/휴지통/이름없는) + 그룹 리스트
-4. **⚠️ Supabase Service Role key Reset** — 이전 세션 대화 로그에 평문 노출된 상태. 재발급 → Vercel env 업데이트 → 재배포
-5. **⚠️ 본 계정 비밀번호 변경** — SQL로 임시 설정한 비밀번호가 대화 로그에 남을 수 있음
-6. **Vercel Preview 환경 NEXT_PUBLIC_SUPABASE_ANON_KEY 추가** — CLI Preview 등록 실패 건, UI에서 수동 추가
-7. **모바일 Google OAuth 재셋팅** — iOS/Android용 Client ID (번들 ID `com.tntkorea.conticamobile` + Android SHA-1)
-8. **폰 기본 연락처 양방향 동기화** — expo-contacts + diff sync (사용자 우선 요구)
-9. **연락처 추가/수정 폼 화면** (모바일)
-10. **카카오/네이버 로그인** 실제 구현
-11. **`contica.co.kr` 도메인 구매** → Vercel 커스텀 도메인 + OAuth origins 추가
+1. **contica.co.kr 도메인 연결** — Vercel 커스텀 도메인 → `contica-995u.vercel.app`에 연결 + Google Cloud OAuth JS origins/redirect 추가
+2. **모바일 Google OAuth 재셋팅** — 새 Supabase 프로젝트(xrwvpfdxcjrgdvcaylgk) 기준으로 iOS/Android Client ID 재발급
+3. **모바일 Drawer 사이드바 구현** — `@react-navigation/drawer` + 필터(전체/즐겨찾기/휴지통/이름없는) + 그룹 리스트
+4. **📱 새 APK 설치 + Discover 탭 실기기 테스트** — https://expo.dev/artifacts/eas/gC7LuTurVMdyFJvTPY2KNw.apk
+5. **Phase 3 — 서브 폰 삭제 감지 UI** — 서브 계정에서 폰 연락처 삭제 시 알림 + 재확인 후 메인 서버 반영
+6. **폰 기본 연락처 양방향 동기화** — expo-contacts + diff sync
+7. **카카오/네이버 로그인** 실제 구현
 
 **Why:** 웹은 실사용 가능 상태. 최종 목표는 React Native 앱 + 앱스토어 배포.
 **How to apply:** 모바일 앱 타입은 현재 수동 복제. 나중에 양쪽 모두 커지면 `packages/shared` 로 추출 검토.
