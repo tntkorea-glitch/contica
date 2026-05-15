@@ -35,7 +35,7 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - Project URL: https://xrwvpfdxcjrgdvcaylgk.supabase.co
 - Region: Northeast Asia (Seoul)
 - 본 계정 새 UUID: **9f4d9870-0ff8-4af1-b33d-b5b21f32c2d7** (구: 85f67042-f584-493e-98d5-d695d27152e5)
-- Vercel 배포 URL: **https://contica-995u.vercel.app**
+- Vercel 배포 URL: **https://contica.vercel.app** (새 Hobby 계정 a01024425659 — contica 프로젝트)
 - GitHub: https://github.com/a01024425659-dev/contica
 
 ## 구 Supabase (이관 전)
@@ -122,7 +122,7 @@ originSessionId: 33481d0a-b320-4a07-b26a-abea00ed8c67
 - **Phase 4 완료 — 웹 중복정리 알림/병합 UI** (커밋 묶음, auto-commit으로 푸시): `DuplicateAlert` 컴포넌트 신규 (헤더 아래 노란 배너, 메인 페이지 로드 시 `/api/v1/contacts/duplicates?mode=exact` 호출해 그룹 수 표시). 배너 클릭 시 `DuplicatesModal` autoStart=true로 자동 open. `DuplicatesModal` 확장: 각 그룹 row에 라디오(기준 primary) + 체크박스(병합 대상) + "선택 병합(N)" 버튼. "전체 병합" 기존 기능도 유지. `page.tsx`: `dupRefreshKey` state로 병합 성공 후 배너 카운트 자동 갱신. `next build` 통과.
 
 ## Next up when resuming
-1. **contica.co.kr 도메인 연결** — Vercel 커스텀 도메인 → `contica-995u.vercel.app`에 연결 + Google Cloud OAuth JS origins/redirect 추가
+1. **contica.co.kr 도메인 연결** — Vercel 커스텀 도메인 → `contica.vercel.app`에 연결 + Google Cloud OAuth JS origins/redirect 추가
 2. **모바일 Google OAuth 재셋팅** — 새 Supabase 프로젝트(xrwvpfdxcjrgdvcaylgk) 기준으로 iOS/Android Client ID 재발급
 3. **모바일 Drawer 사이드바 구현** — `@react-navigation/drawer` + 필터(전체/즐겨찾기/휴지통/이름없는) + 그룹 리스트
 4. **📱 새 APK 설치 + Discover 탭 실기기 테스트** — https://expo.dev/artifacts/eas/gC7LuTurVMdyFJvTPY2KNw.apk
